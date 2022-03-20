@@ -8,10 +8,10 @@
 <meta name="author" content="">
 <meta name="keywords" content="MediaCenter, Template, eCommerce">
 <meta name="robots" content="all">
-<title>E-commerce Store</title>
+<title>Flipmart premium HTML5 & CSS3 Template</title>
 
 <!-- Bootstrap Core CSS -->
-<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="{{ asset('frontend/assets/css/bootstrap.min.css') }}">
 
 <!-- Customizable CSS -->
 <link rel="stylesheet" href="{{ asset('frontend/assets/css/main.css') }}">
@@ -32,7 +32,6 @@
 </head>
 <body class="cnt-home">
 <!-- ============================================== HEADER ============================================== -->
-
 @include('frontend.body.header')
 
 <!-- ============================================== HEADER : END ============================================== -->
