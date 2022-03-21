@@ -1109,7 +1109,7 @@
         
         <!-- ============================================== Testimonials: END ============================================== -->
         
-        <div class="home-banner"> <img src="assets/images/banners/LHS-banner.jpg" alt="Image"> </div>
+        <div class="home-banner"> <img src="{{asset('frontend/assets/images/banners/LHS-banner.jpg')}}" alt="Image"> </div>
       </div>
       <!-- /.sidemenu-holder --> 
       <!-- ============================================== SIDEBAR : END ============================================== --> 
