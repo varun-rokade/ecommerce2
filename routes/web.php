@@ -5,8 +5,11 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Backend\AdminProfileController;
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\Backend\SubCategoryController;
+use App\Models\SubCategory;
+use App\Models\SubSubCategory;
 use App\Models\User;
 // use Auth;
 
@@ -93,9 +96,34 @@ Route::prefix('category')->group(function(){
 //All Sub Category
 
 
-    Route::get('/view',[SubCategoryController::class,'ViewSubCategory'])->name('all.subcategory');
+    Route::get('/view/subcategory',[SubCategoryController::class,'ViewSubCategory'])->name('all.subcategory');
+    Route::post('/subcategory/store',[SubCategoryController::class,'StoreSubCategory'])->name('subcategory.store');
+    Route::get('/subcategory/edit/{id}',[SubCategoryController::class,'EditSubCategory'])->name('edit.subcategory');
+    Route::post('sub/update',[SubCategoryController::class,'SubCatUpdate'])->name('subcategory.update');
+    Route::get('/delete/subcategory/{id}',[SubCategoryController::class,'delete'])->name('delete.subcategory');
+
+// All Sub Subcategory
+
+    Route::get('/view/sub/subcategory',[SubCategoryController::class,'ViewSubSub'])->name('all.subsubcategory');
+    Route::get('/subcategory/ajax/{category_id}',[SubCategoryController::class,'GetSubCategory']);
+    Route::post('/subsubcategory/store',[SubCategoryController::class,'subsubcategory'])->name('subsubcategory.store');
+    Route::get('edit/subsubcategory/{id}',[SubCategoryController::class,'editsubsub'])->name('edit.subsubcategory');
+    Route::post('/update/subsubcategory/',[SubCategoryController::class,'update'])->name('subsubcategory.update');
+    Route::get('/delete/subsubcategory/{id}',[SubCategoryController::class,'SubSubDelete'])->name('delete.subsubcategory');
 
 
+});
+
+
+///////////////////// All Products Route//////////////////////////////////
+
+Route::prefix('product')->group(function(){
+    
+    Route::get('/view',[ProductController::class,'ViewProducts'])->name('add.product');
+    // Route::post('/store',[BrandController::class,'BrandStore'])->name('brand.store');
+    // Route::get('edit/{id}',[BrandController::class,'EditBrand'])->name('edit.brand');
+    // Route::post('update/',[BrandController::class,'UpdateBrand'])->name('brand.update');
+    // Route::get('delete/{id}',[BrandController::class,'DeleteBrand'])->name('delete.brand');
 
 
 });
