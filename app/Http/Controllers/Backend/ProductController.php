@@ -32,10 +32,10 @@ class ProductController extends Controller
 
          $image = $request->file('product_thumbnail');
          $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
-         Image::make($image)->resize(300,200)->save('upload/product/thumbnail/'.$name_gen);
-         $save_url = 'upload/product/thumbnail/'.$name_gen;
+        $image->store('upload/product/thumbnail/'.$name_gen);
+        $save_url = 'upload/product/thumbnail/'.$name_gen;
 
-             Product::insert([
+            $product_id =  Product::insert([
 
                 'brand_id' => $request->brand_id,
                 'category_id' => $request->category_id,
@@ -44,7 +44,7 @@ class ProductController extends Controller
                 'product_name_en' => $request->product_name_en,
                 'product_name_hin' => $request->product_name_hin,
                 'product_slug_en' => strtolower(str_replace(' ','-',$request->product_name_en)),
-                'product_slug_hin' => str_replace(' ','-',$request->product_name_hin),
+                'product_slug_hin' => strtolower(str_replace(' ','-',$request->product_name_hin)),
                 'product_code' => $request->product_code,
                 'product_qty' => $request->product_qty,
                 'product_tags_en' => $request->product_tags_en,
@@ -59,7 +59,7 @@ class ProductController extends Controller
                 'short_desc_hin' => $request->short_desc_hin,
                 'long_desc_en' => $request->long_desc_en,
                 'long_desc_hin' => $request->long_desc_hin,
-                'multi_img' => $request->multi_img,
+                // 'multi_img' => $request->multi_img,
                 'hot_deals' => $request->hot_deals,
                 'featured' => $request->featured,
                 'special_offer' => $request->special_offer,
@@ -72,25 +72,38 @@ class ProductController extends Controller
             ]);
     
 
-        //     $images = $request->file('multi_img');
-        // foreach($images as $img)
-        // $make_name = hexdec(uniqid()).'.'.$img->getClientOriginalExtension();
-        // $image->store('upload/product/multi-img'.$make_name);
-        // $upload_path = 'upload/product/multi-img'.$make_name;
-
-        //     MultiImg::insert([
-
-        //         'product_id' => $product_id,
-        //         'photo_name' => $upload_path,
-        //         'created_at' => Carbon::now(),
-        //     ]);
-
+            $images = $request->file('multi_img');
+        foreach($images as $img)
+        {
+        $make_name = hexdec(uniqid()).'.'.$img->getClientOriginalExtension();
+        $image->store('upload/product/multi-img'.$make_name);
+        $upload_path = 'upload/product/multi-img'.$make_name;
+        
+            MultiImg::insert([
+// 
+                'product_id' => $product_id,
+                'photo_name' => $upload_path,
+                'created_at' => Carbon::now(),
+            ]);
+        }    
             $notification = array( 
                 'message' => 'Product Added Successfully',
                 'alert-type' => 'success'
             );
     
-            return redirect()->back()->with($notification);
+            return redirect()->route('manage.product')->with($notification);
     
     }
+
+    public function manage()
+    {
+        $products = Product::get();
+        return view('backend.product.view_products',compact('products'));
+
+    }
+
+
+
+
+
 }

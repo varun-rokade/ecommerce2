@@ -307,7 +307,7 @@
                                 <div class="form-group">
                                     <h5>Selling Price <span class="text-danger">*</span></h5>
                                     <div class="controls">
-                                        <input type="text" name="selling_price" class="form-control" required data-validation-required-message="This field is required"> </div>
+                                        <input type="text" name="selling_price" class="form-control" > </div>
                                 </div>
 
 
@@ -325,7 +325,7 @@
                                 <div class="form-group">
                                     <h5>Discount Price <span class="text-danger">*</span></h5>
                                     <div class="controls">
-                                        <input type="text" name="discount_price" class="form-control""> </div>
+                                        <input type="text" name="discount_price" class="form-control"> </div>
                                 
                                         @error('product_color_hin')
                                         <span class="text-danger">{{ $message}}</span>
@@ -361,7 +361,7 @@
                                 <div class="form-group">
                                     <h5>Multiple Image <span class="text-danger">*</span></h5>
                                     <div class="controls">
-                                        <input type="file" name="multi_img[]" class="form-control" multiple="" id="multiple"> </div>
+                                        <input type="file" name="multi_img" class="form-control" multiple="" id="multiple"> </div>
                                 
                                         @error('multi_img')
                                         <span class="text-danger">{{ $message}}</span>
@@ -383,7 +383,7 @@
                                 <div class="form-group">
                                     <h5>Short Description English <span class="text-danger">*</span></h5>
                                     <div class="controls">
-                                        <textarea name="short_desc_en" id="textarea" class="form-control" required placeholder="Textarea text"></textarea>
+                                        <textarea name="short_desc_en" id="textarea" class="form-control"  placeholder="Textarea text"></textarea>
                                     </div>
                                 </div>
 
@@ -395,7 +395,7 @@
                                 <div class="form-group">
                                     <h5>Short Descripton Hindi <span class="text-danger">*</span></h5>
                                     <div class="controls">
-                                        <textarea name="short_desc_hin" id="textarea" class="form-control" required placeholder="Textarea text"></textarea>
+                                        <textarea name="short_desc_hin" id="textarea" class="form-control"  placeholder="Textarea text"></textarea>
                                     </div>
                                 </div>
 

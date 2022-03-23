@@ -122,7 +122,7 @@ Route::prefix('product')->group(function(){
     
     Route::get('/addproduct',[ProductController::class,'AddProduct'])->name('add.product');
     Route::post('/store',[ProductController::class,'ProductStore'])->name('product.store');
-    // Route::get('edit/{id}',[BrandController::class,'EditBrand'])->name('edit.brand');
+    Route::get('product/manage',[ProductController::class,'manage'])->name('manage.product');
     // Route::post('update/',[BrandController::class,'UpdateBrand'])->name('brand.update');
     // Route::get('delete/{id}',[BrandController::class,'DeleteBrand'])->name('delete.brand');
 

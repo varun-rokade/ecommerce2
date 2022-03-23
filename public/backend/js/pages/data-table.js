@@ -71,7 +71,7 @@ $(function () {
 	
 	
 	//---------------Form inputs
-	var table = $('#example6').DataTable();
+	/*var table = $('#example6').DataTable();
  
     $('button').click( function() {
         var data = table.$('input, select').serialize();
@@ -80,7 +80,7 @@ $(function () {
             data.substr( 0, 120 )+'...'
         );
         return false;
-    } );
+    } );*/
 	
 	
 	
