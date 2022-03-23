@@ -99,13 +99,14 @@ Route::prefix('category')->group(function(){
     Route::get('/view/subcategory',[SubCategoryController::class,'ViewSubCategory'])->name('all.subcategory');
     Route::post('/subcategory/store',[SubCategoryController::class,'StoreSubCategory'])->name('subcategory.store');
     Route::get('/subcategory/edit/{id}',[SubCategoryController::class,'EditSubCategory'])->name('edit.subcategory');
-    Route::post('sub/update',[SubCategoryController::class,'SubCatUpdate'])->name('subcategory.update');
+    Route::post('/sub/update',[SubCategoryController::class,'SubCatUpdate'])->name('subcategory.update');
     Route::get('/delete/subcategory/{id}',[SubCategoryController::class,'delete'])->name('delete.subcategory');
 
 // All Sub Subcategory
 
     Route::get('/view/sub/subcategory',[SubCategoryController::class,'ViewSubSub'])->name('all.subsubcategory');
     Route::get('/subcategory/ajax/{category_id}',[SubCategoryController::class,'GetSubCategory']);
+    Route::get('/sub-subcategory/ajax/{subcategory_id}',[SubCategoryController::class,'GetSubSubCategory']);
     Route::post('/subsubcategory/store',[SubCategoryController::class,'subsubcategory'])->name('subsubcategory.store');
     Route::get('edit/subsubcategory/{id}',[SubCategoryController::class,'editsubsub'])->name('edit.subsubcategory');
     Route::post('/update/subsubcategory/',[SubCategoryController::class,'update'])->name('subsubcategory.update');
@@ -120,7 +121,7 @@ Route::prefix('category')->group(function(){
 Route::prefix('product')->group(function(){
     
     Route::get('/addproduct',[ProductController::class,'AddProduct'])->name('add.product');
-    // Route::post('/store',[BrandController::class,'BrandStore'])->name('brand.store');
+    Route::post('/store',[ProductController::class,'ProductStore'])->name('product.store');
     // Route::get('edit/{id}',[BrandController::class,'EditBrand'])->name('edit.brand');
     // Route::post('update/',[BrandController::class,'UpdateBrand'])->name('brand.update');
     // Route::get('delete/{id}',[BrandController::class,'DeleteBrand'])->name('delete.brand');
