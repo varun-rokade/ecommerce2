@@ -55,7 +55,7 @@ class SubCategoryController extends Controller
         return view('backend.category.subedit',compact('subcategory','category'));
     }
 
-    public function SubCatUpdate(request $request)
+    public function SubCatUpdate(request $request,$id)
     {
         $subcategory_id = $request->id;
         SubCategory::findorfail($subcategory_id)->update([
@@ -87,7 +87,7 @@ class SubCategoryController extends Controller
 
         return redirect()->route('all.subcategory')->with($notification);
     }
-// ////////////////////////For Sub Category////////////////////////////// 
+// ////////////////////////For Sub Sub Category////////////////////////////// 
 
     public function ViewSubSub()
     {

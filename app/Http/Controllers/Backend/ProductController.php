@@ -31,9 +31,19 @@ class ProductController extends Controller
 
 
          $image = $request->file('product_thumbnail');
-         $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
-        $image->store('upload/product/thumbnail/'.$name_gen);
-        $save_url = 'upload/product/thumbnail/'.$name_gen;
+         $name_gen = hexdec(uniqid());
+         $img_ext = strtolower($image->getClientOriginalExtension());
+         $img_name = $name_gen . '.' . $img_ext;
+         $up_location = "product/thumbnail";
+         $last_img = $up_location.$img_name;
+         $image->move($up_location,$img_name);      
+
+
+
+
+        //  $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
+        // $image->store('upload/product/thumbnail/'.$name_gen);
+        // $save_url = 'upload/product/thumbnail/'.$name_gen;
 
             $product_id =  Product::insert([
 
@@ -64,7 +74,7 @@ class ProductController extends Controller
                 'featured' => $request->featured,
                 'special_offer' => $request->special_offer,
                 'special_deals' => $request->special_deals,
-                'product_thumbnail' => $save_url,
+                'product_thumbnail' => $image,
                 'status' => 1,
                 'created_at' => Carbon::now(),
                 'brand_id' => $request->brand_id,
@@ -72,20 +82,20 @@ class ProductController extends Controller
             ]);
     
 
-            $images = $request->file('multi_img');
-        foreach($images as $img)
-        {
-        $make_name = hexdec(uniqid()).'.'.$img->getClientOriginalExtension();
-        $image->store('upload/product/multi-img'.$make_name);
-        $upload_path = 'upload/product/multi-img'.$make_name;
+//             $images = $request->file('multi_img');
+//         foreach($images as $img)
+//         {
+//         $make_name = hexdec(uniqid()).'.'.$img->getClientOriginalExtension();
+//         $image->store('upload/product/multi-img'.$make_name);
+//         $upload_path = 'upload/product/multi-img'.$make_name;
         
-            MultiImg::insert([
-// 
-                'product_id' => $product_id,
-                'photo_name' => $upload_path,
-                'created_at' => Carbon::now(),
-            ]);
-        }    
+//             MultiImg::insert([
+// // 
+//                 'product_id' => $product_id,
+//                 'photo_name' => $upload_path,
+//                 'created_at' => Carbon::now(),
+//             ]);
+//         }    
             $notification = array( 
                 'message' => 'Product Added Successfully',
                 'alert-type' => 'success'
@@ -103,7 +113,101 @@ class ProductController extends Controller
     }
 
 
+    public function edit($id)
+    {
+        $category = Category::get();
+        $subcategory = SubCategory::get();
+        $subsubcategory = SubSubCategory::get();
+        $brands = Brands::get();
+        $product = Product::findorfail($id);
+        return view('backend.product.edit_product',compact('category','subcategory','subsubcategory','brands','product'));
+    }
 
+    public function update(Request $request)
+    {
+
+        $product_id = $request->id;
+
+        Product::findorfail($product_id)->update([
+
+            'brand_id' => $request->brand_id,
+            'category_id' => $request->category_id,
+            'subcategory_id' => $request->subcategory_id,
+            'subsubcategory_id' => $request->subsubcategory_id,
+            'product_name_en' => $request->product_name_en,
+            'product_name_hin' => $request->product_name_hin,
+            'product_slug_en' => strtolower(str_replace(' ','-',$request->product_name_en)),
+            'product_slug_hin' => strtolower(str_replace(' ','-',$request->product_name_hin)),
+            'product_code' => $request->product_code,
+            'product_qty' => $request->product_qty,
+            'product_tags_en' => $request->product_tags_en,
+            'product_tags_hin' => $request->product_tags_hin,
+            'product_size_en' => $request->product_size_en,
+            'product_size_hin' => $request->product_size_hin,
+            'product_color_en' => $request->product_color_en,
+            'product_color_hin' => $request->product_color_hin,
+            'selling_price' => $request->selling_price,
+            'discount_price' => $request->discount_price,
+            'short_desc_en' => $request->short_desc_en,
+            'short_desc_hin' => $request->short_desc_hin,
+            'long_desc_en' => $request->long_desc_en,
+            'long_desc_hin' => $request->long_desc_hin,
+            // 'multi_img' => $request->multi_img,
+            'hot_deals' => $request->hot_deals,
+            'featured' => $request->featured,
+            'special_offer' => $request->special_offer,
+            'special_deals' => $request->special_deals,
+            // 'product_thumbnail' => $save_url,
+            'status' => 1,
+            'created_at' => Carbon::now(),
+            // 'brand_id' => $request->brand_id,
+
+        ]);
+        $notification = array( 
+            'message' => 'Product Updated Successfully',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->back()->with($notification);
+    } 
+
+    public function inactive($id)
+    {
+        Product::findorfail($id)->update(['status' => 0]);
+
+        $notification = array( 
+            'message' => 'Product Inactive',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->back()->with($notification);
+    }
+
+    public function active($id)
+    {
+        Product::findorfail($id)->update(['status' => 1]);
+
+        $notification = array( 
+            'message' => 'Product Active',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->back()->with($notification);
+    }
+
+    public function delete($id)
+    {   
+        Product::findorfail($id)->delete();
+
+        $notification = array( 
+            'message' => 'Product Deleted',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->back()->with($notification);
+
+
+    } 
 
 
 }

@@ -6,8 +6,10 @@ use App\Http\Controllers\Backend\AdminProfileController;
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ProductController;
+use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\Backend\SubCategoryController;
+use App\Http\Controllers\Frontend\LanguageController;
 use App\Models\SubCategory;
 use App\Models\SubSubCategory;
 use App\Models\User;
@@ -99,7 +101,7 @@ Route::prefix('category')->group(function(){
     Route::get('/view/subcategory',[SubCategoryController::class,'ViewSubCategory'])->name('all.subcategory');
     Route::post('/subcategory/store',[SubCategoryController::class,'StoreSubCategory'])->name('subcategory.store');
     Route::get('/subcategory/edit/{id}',[SubCategoryController::class,'EditSubCategory'])->name('edit.subcategory');
-    Route::post('/sub/update',[SubCategoryController::class,'SubCatUpdate'])->name('subcategory.update');
+    Route::post('/sub/update/{id}',[SubCategoryController::class,'SubCatUpdate'])->name('subcategory.update');
     Route::get('/delete/subcategory/{id}',[SubCategoryController::class,'delete'])->name('delete.subcategory');
 
 // All Sub Subcategory
@@ -116,6 +118,7 @@ Route::prefix('category')->group(function(){
 });
 
 
+
 ///////////////////// All Products Route//////////////////////////////////
 
 Route::prefix('product')->group(function(){
@@ -123,8 +126,29 @@ Route::prefix('product')->group(function(){
     Route::get('/addproduct',[ProductController::class,'AddProduct'])->name('add.product');
     Route::post('/store',[ProductController::class,'ProductStore'])->name('product.store');
     Route::get('product/manage',[ProductController::class,'manage'])->name('manage.product');
-    // Route::post('update/',[BrandController::class,'UpdateBrand'])->name('brand.update');
-    // Route::get('delete/{id}',[BrandController::class,'DeleteBrand'])->name('delete.brand');
-
-
+    Route::get('edit/product/{id}',[ProductController::class,'edit'])->name('product.edit');
+    Route::post('update/',[ProductController::class,'update'])->name('product.update');
+    Route::get('inactive/{id}',[ProductController::class,'inactive'])->name('product.inactive');
+    Route::get('active/{id}',[ProductController::class,'active'])->name('product.active');
+    Route::get('delete/{id}',[ProductController::class,'delete'])->name('product.delete');
 });
+
+Route::prefix('slider')->group(function(){
+
+    Route::get('view/',[SliderController::class,'view'])->name('manage.slider');
+    Route::post('/store',[SliderController::class,'store'])->name('slider.store');
+    Route::get('/edit/{id}',[SliderController::class,'edit'])->name('edit.slider');
+    Route::post('update/{id}',[SliderController::class,'update'])->name('slider.update');
+    Route::get('delete/{id}',[SliderController::class,'delete'])->name('delete.slider');
+    Route::get('inactive/{id}',[SliderController::class,'inactive'])->name('slider.inactive');
+    Route::get('active/{id}',[SliderController::class,'active'])->name('slider.active');
+});
+
+////////////////////////Frontend Routes///////////////////////////////////
+///////////////////////////Multi Language Route////////////////////////////////
+
+Route::get('english/language',[LanguageController::class,'english'])->name('english.language');
+Route::get('hindi/language',[LanguageController::class,'hindi'])->name('hindi.language');
+
+
+

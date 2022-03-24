@@ -6,13 +6,18 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth;
 use App\Models\User;
+use App\Models\Category;
+use App\Models\Slider;
 use Illuminate\Support\Facades\Hash;
 
 class IndexController extends Controller
 {
     public function Index()
     {
-        return view('frontend.index');
+        $slider = Slider::where('status',1)->order_by('id','DESC')->limit(3)->get() ;
+
+        $category = Category::orderBy('category_name_en','ASC')->get();
+        return view('frontend.index',compact('category'));
     }
 
     public function UserLogout()
