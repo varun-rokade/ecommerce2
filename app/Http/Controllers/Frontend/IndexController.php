@@ -22,7 +22,13 @@ class IndexController extends Controller
         $slider = Slider::where('status',1)->limit(3)->get() ;
 
         $category = Category::orderBy('category_name_en','ASC')->get();
-        return view('frontend.index',compact('category','slider','product'));
+
+        $featured = Product::where('featured',1)->orderBy('id','DESC')->limit(6)->get(); 
+
+        $skip_category = Category::skip(3)->first();
+        $skip_products = Product::where('status',1)->where('category_id',$skip_category->id)->orderby('id','DESC')->get();    
+
+        return view('frontend.index',compact('category','slider','product','featured','skip_category','skip_products'));
     }
 
     public function UserLogout()
@@ -100,6 +106,13 @@ class IndexController extends Controller
         {
             return redirect()->back();
         }
+    }
+
+
+    public function ProductDetails($id,$slug)
+    {
+        $product = Product::findorFail($id);
+        return view('frontend.product.product_details',compact('product'));
     }
 
 }

@@ -150,5 +150,6 @@ Route::prefix('slider')->group(function(){
 Route::get('english/language',[LanguageController::class,'english'])->name('english.language');
 Route::get('hindi/language',[LanguageController::class,'hindi'])->name('hindi.language');
 
+Route::get('product/details/{id}/{slug}',[IndexController::class,'ProductDetails']);
 
 
