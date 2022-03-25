@@ -45,7 +45,7 @@ class ProductController extends Controller
         // $image->store('upload/product/thumbnail/'.$name_gen);
         // $save_url = 'upload/product/thumbnail/'.$name_gen;
 
-            $product_id =  Product::insert([
+            Product::insert([
 
                 'brand_id' => $request->brand_id,
                 'category_id' => $request->category_id,
@@ -74,10 +74,10 @@ class ProductController extends Controller
                 'featured' => $request->featured,
                 'special_offer' => $request->special_offer,
                 'special_deals' => $request->special_deals,
-                'product_thumbnail' => $image,
+                'product_thumbnail' => $last_img,
                 'status' => 1,
                 'created_at' => Carbon::now(),
-                'brand_id' => $request->brand_id,
+                // 'brand_id' => $request->brand_id,
 
             ]);
     
