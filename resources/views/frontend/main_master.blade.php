@@ -133,26 +133,27 @@
 			<div class="col-md-4">
 
 				<div class="form-group">
-					<label for="exampleFormControlSelect1">Select Color</label>
-					<select class="form-control" id="exampleFormControlSelect1" name="color">
+					<label for="color">Select Color</label>
+					<select class="form-control" id="color" name="color">
 					  
 					  
 					</select>
 				  </div>
 
 				  <div class="form-group" id="sizearea">
-					<label for="exampleFormControlSelect1">Select Size</label>
-					<select class="form-control" id="exampleFormControlSelect1" name="size">
+					<label for="size">Select Size</label>
+					<select class="form-control" id="size" name="size">
 					  <option>1</option>
 					  
 					</select>
 				  </div>
 
 				  <div class="form-group">
-					<label for="exampleFormControlSelect1">Quantity</label>
-    <input type="number" class="form-control" id="exampleFormControlInput1" value="1" min="1">
+					<label for="qty">Quantity</label>
+    <input type="number" class="form-control" id="qty" value="1" min="1">
 				  </div>
-				  <button type="submit" class="btn btn-primary mb-2">Add To Cart</button>
+				  <input type="hidden"  id="product_id">
+				  <button type="submit" class="btn btn-primary mb-2" onclick="addToCart()">Add To Cart</button>
 			</div>
 
 		</div>
@@ -192,6 +193,8 @@
 				$('#category').text(data.product.category.category_name_en);
 				$('#brand').text(data.product.brand.brand_name_en);
 
+				$('#product_id').val(id);	
+				$('#qty').val(1);	
 				//product price
 				if(data.product.discount_price == null)
 				{
@@ -248,6 +251,36 @@
 			}
 		});
 	}
+
+
+// Start Add to Cart Product
+
+// function addToCart()
+// {
+// 	var product_name = $('#name').text();
+// 	var id = $(3product_id).val();
+// 	var color = $('#color option:selected').text();
+// 	var size = $('#size option:selected').text();
+// 	var qty = $('#qty').val();
+
+// 	$.ajax({
+// 		type:"POST",
+// 		dataType: 'json',
+// 		data:{
+// 			color:color,size:size,quantity:quantity, product_name:product_name
+// 		},
+// 		url: "/cart/data/store/"+id,
+// 		success:function(data)
+// 		{
+// 			console.log('data');
+// 		}
+// 	})
+
+
+// }
+
+
+
 
 
 </script>
