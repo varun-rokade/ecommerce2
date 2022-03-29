@@ -112,7 +112,55 @@ class IndexController extends Controller
     public function ProductDetails($id,$slug)
     {
         $product = Product::findorFail($id);
-        return view('frontend.product.product_details',compact('product'));
+
+        $color_en = $product->product_color_en;
+        $product_color_en = explode(',',$color_en);
+
+        $color_hin = $product->product_color_hin;
+        $product_color_hin = explode(',',$color_hin);
+
+        $size_en = $product->product_size_en;
+        $product_size_en = explode(',',$size_en);
+
+        $size_hin = $product->product_size_hin;
+        $product_size_hin = explode(',',$size_hin);
+
+        $cat_id  = $product->category_id;
+        $related_product = Product::where('category_id',$cat_id)->where('id','!-',$id)->orderby('id','DESC')->get();
+        return view('frontend.product.product_details',compact('product','product_color_en','product_color_hin','product_size_en','product_size_hin','related_product'));
     }
+
+    public function TagsWiseProducts($tags)
+    {
+        $product = Product::where('status',1)->where('product_tags_en',$tags)->where('product_tags_hin',$tags)->orderby('id','desc')->get();
+        $category = Category::orderBy('category_name_en','ASC')->get();
+        return view('frontend.tags.tags_view',compact('product','category'));
+    }
+
+
+    public function SubcatWiseProducts($slug,$subcat_id)
+    {
+        $product = Product::where('status',1)->where('subcategory_id',$subcat_id)->orderby('id','desc')->get();
+        $category = Category::orderBy('category_name_en','ASC')->get();
+        return view('frontend.product.subcat_view',compact('product','category'));
+    }
+
+    public function SubSubcatWiseProducts($subsubcat_id,$slug)
+    {
+        $product = Product::where('status',1)->where('subsubcategory_id',$subsubcat_id)->orderby('id','desc')->get();
+        $category = Category::orderBy('category_name_en','ASC')->get();
+        return view('frontend.product.sub_subcat_view',compact('product','category'));
+
+    }
+
+    public function productviewajax($id)
+    {
+        $product = Product::findorFail($id);
+
+        $color_en = $product->product_color_en;
+        $product_color_en = explode(',',$color_en);        
+    }
+
+
 
 }

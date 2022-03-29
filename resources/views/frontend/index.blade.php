@@ -14,81 +14,17 @@ E-Commerce Store
       <div class="col-xs-12 col-sm-12 col-md-3 sidebar"> 
         
         <!-- ================================== TOP NAVIGATION ================================== -->
-        <div class="side-menu animate-dropdown outer-bottom-xs">
 
 
 
-          <div class="head"><i class="icon fa fa-align-justify fa-fw"></i> 
-            @if(session()->get('language') == 'hindi')श्रेणियाँ @else Categories @endif 
-          </div>
-          <nav class="yamm megamenu-horizontal">
-            <ul class="nav">
-              @foreach($category as $item)
-              <li class="dropdown menu-item"> <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon {{ $item->category_icon }}" 
-                aria-hidden="true"></i>
-                @if(session()->get('language') == 'hindi'){{ $item ->category_name_hin }} @else {{ $item ->category_name_en }} @endif
-                </a>
-                <ul class="dropdown-menu mega-menu">
-                  <li class="yamm-content">
-                    <div class="row">
-
-                      @php
-                          $subcategory = App\Models\SubCategory::where('category_id',$item->id)->orderBy('subcategory_name_en','ASC')->get();
-                      @endphp
-
-                        @foreach($subcategory as $subcat)
-
-                      <div class="col-sm-12 col-md-3">
-
-@if(session()->get('language') == 'hindi'){{$subcat->subcategory_name_hin}} @else {{ $subcat->subcategory_name_en }} @endif
-
-@php
-$subsubcategory = App\Models\SubSubCategory::where('subcategory_id',$subcat->id)->orderBy('subsubcategory_name_en','ASC')->get();
-@endphp
-
-@foreach($subsubcategory as $sscat)
-                          <ul class="links list-unstyled">
+@include('frontend.common.vertical_menu')
 
 
-                          <li><a href="#">
-                            @if(session()->get('language') == 'hindi'){{$sscat->subsubcategory_name_hin}} @else {{ $sscat->subsubcategory_name_en }} @endif
-                            </a></li>
-                          
 
 
-                        </ul>
-@endforeach
-                      </div>
-                      <!-- /.col -->
-                      @endforeach
-                      <!-- /.col --> 
-                    </div>
-                    <!-- /.row --> 
-                  </li>
-                  <!-- /.yamm-content -->
-                </ul>
-                <!-- /.dropdown-menu --> 
-              </li>
-              @endforeach
-              <!-- /.menu-item -->
-              
-          
-              <li class="dropdown menu-item"> <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon fa fa-futbol-o"></i>Sports</a> 
-                <!-- ================================== MEGAMENU VERTICAL ================================== --> 
-                <!-- /.dropdown-menu --> 
-                <!-- ================================== MEGAMENU VERTICAL ================================== --> </li>
-              <!-- /.menu-item -->
-              
-              <li class="dropdown menu-item"> <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon fa fa-envira"></i>Home and Garden</a> 
-                <!-- /.dropdown-menu --> </li>
-              <!-- /.menu-item -->
-              
-            </ul>
-            <!-- /.nav --> 
-          </nav>
-          <!-- /.megamenu-horizontal --> 
-        </div>
-        <!-- /.side-menu --> 
+
+
+
         <!-- ================================== TOP NAVIGATION : END ================================== --> 
         
         <!-- ============================================== HOT DEALS ============================================== -->
@@ -508,14 +444,7 @@ $subsubcategory = App\Models\SubSubCategory::where('subcategory_id',$subcat->id)
         <!-- /.sidebar-widget --> 
         <!-- ============================================== SPECIAL OFFER : END ============================================== --> 
         <!-- ============================================== PRODUCT TAGS ============================================== -->
-        <div class="sidebar-widget product-tag wow fadeInUp">
-          <h3 class="section-title">Product tags</h3>
-          <div class="sidebar-widget-body outer-top-xs">
-            <div class="tag-list"> <a class="item" title="Phone" href="category.html">Phone</a> <a class="item active" title="Vest" href="category.html">Vest</a> <a class="item" title="Smartphone" href="category.html">Smartphone</a> <a class="item" title="Furniture" href="category.html">Furniture</a> <a class="item" title="T-shirt" href="category.html">T-shirt</a> <a class="item" title="Sweatpants" href="category.html">Sweatpants</a> <a class="item" title="Sneaker" href="category.html">Sneaker</a> <a class="item" title="Toys" href="category.html">Toys</a> <a class="item" title="Rose" href="category.html">Rose</a> </div>
-            <!-- /.tag-list --> 
-          </div>
-          <!-- /.sidebar-widget-body --> 
-        </div>
+       @include('frontend.common.product_tags')
         <!-- /.sidebar-widget --> 
         <!-- ============================================== PRODUCT TAGS : END ============================================== --> 
         <!-- ============================================== SPECIAL DEALS ============================================== -->
@@ -995,7 +924,7 @@ $subsubcategory = App\Models\SubSubCategory::where('subcategory_id',$subcat->id)
                           <div class="action">
                             <ul class="list-unstyled">
                               <li class="add-cart-button btn-group">
-                                <button data-toggle="tooltip" class="btn btn-primary icon" type="button" title="Add Cart"> <i class="fa fa-shopping-cart"></i> </button>
+                                <button  class="btn btn-primary icon" type="button" title="Add Cart" data-toggle="modal" data-target="#exampleModal" id="{{$item->id }}" onclick="productView(this.id)" > <i class="fa fa-shopping-cart"></i> </button>
                                 <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
                               </li>
                               <li class="lnk wishlist"> <a data-toggle="tooltip" class="add-to-cart" href="detail.html" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>

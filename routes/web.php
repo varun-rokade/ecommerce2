@@ -152,4 +152,14 @@ Route::get('hindi/language',[LanguageController::class,'hindi'])->name('hindi.la
 
 Route::get('product/details/{id}/{slug}',[IndexController::class,'ProductDetails']);
 
+//////////Products Tags Route//////////////////
+Route::get('product/tag/{tags}',[IndexController::class,'TagsWiseProducts']);
 
+/////////////////Frontend Subcategory Wise Data//////////////////////////
+
+Route::get('subcategory/product/{subcat_id}/{slug}',[IndexController::class,'SubcatWiseProducts']);
+
+
+Route::get('subsubcategory/product/{subsubcat_id}/{slug}',[IndexController::class,'SubSubcatWiseProducts']);
+
+Route::get('product/view/modal/{id}',[IndexController::class,'productviewajax']);

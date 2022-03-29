@@ -206,7 +206,7 @@
 
                             
                             <ul class="links">
-                              <li><a href="#">
+                              <li><a href="{{ url('subsubcategory/product/'.$sscat->id.'/'.$sscat->subsubcategory_slug_en) }}">
                                 @if(session()->get('language') == 'hindi'){{$sscat->subsubcategory_name_hin}} @else {{ $sscat->subsubcategory_name_en }} @endif
                                 </a></li>
                               
