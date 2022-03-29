@@ -155,10 +155,23 @@ class IndexController extends Controller
 
     public function productviewajax($id)
     {
-        $product = Product::findorFail($id);
+        $product = Product::with('category','brand')->findorfail($id);
 
         $color_en = $product->product_color_en;
         $product_color_en = explode(',',$color_en);        
+    
+        $size = $product->product_size_en;
+        $product_size_en = explode(',',$size);
+    
+        return response()->json(array(
+
+            'product' => $product,
+            'product_color' => $product_color_en,
+            'product_size' => $product_size_en,
+
+        ));
+
+
     }
 
 

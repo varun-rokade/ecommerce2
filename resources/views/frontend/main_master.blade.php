@@ -96,7 +96,7 @@
 	<div class="modal-dialog">
 	  <div class="modal-content">
 		<div class="modal-header">
-		  <h5 class="modal-title" id="exampleModalLabel">Product Name</h5>
+		  <h5 class="modal-title" id="exampleModalLabel"><span id="pname"></span></h5>
 		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			<span aria-hidden="true">&times;</span>
 		  </button>
@@ -118,11 +118,14 @@
 			<div class="col-md-4">
 
 				<ul class="list-group">
-					<li class="list-group-item">Product Price</li>
-					<li class="list-group-item">Product Code</li>
-					<li class="list-group-item">Category</li>
-					<li class="list-group-item">Brand</li>
-					<li class="list-group-item">Stock</li>
+					<li class="list-group-item">Product Price: <strong class="text-danger">$<span id="sprice"></span></strong>
+					<del id="oldprice">$</del></li>
+					<li class="list-group-item">Product Code: <strong id="code"></strong></li>
+					<li class="list-group-item">Category: <strong id="category"></strong></li>
+					<li class="list-group-item">Brand: <strong id="brand"></strong> </li>
+					<li class="list-group-item">Stock <span class="badge badge-pill badge-success" id="available" style="background:green;color:white"></span>
+						<span class="badge badge-pill badge-danger" id="stockout" style="background:red;color:white"></span>
+					</li>
 				  </ul>
 
 			</div>
@@ -131,23 +134,17 @@
 
 				<div class="form-group">
 					<label for="exampleFormControlSelect1">Select Color</label>
-					<select class="form-control" id="exampleFormControlSelect1">
-					  <option>1</option>
-					  <option>2</option>
-					  <option>3</option>
-					  <option>4</option>
-					  <option>5</option>
+					<select class="form-control" id="exampleFormControlSelect1" name="color">
+					  
+					  
 					</select>
 				  </div>
 
-				  <div class="form-group">
+				  <div class="form-group" id="sizearea">
 					<label for="exampleFormControlSelect1">Select Size</label>
-					<select class="form-control" id="exampleFormControlSelect1">
+					<select class="form-control" id="exampleFormControlSelect1" name="size">
 					  <option>1</option>
-					  <option>2</option>
-					  <option>3</option>
-					  <option>4</option>
-					  <option>5</option>
+					  
 					</select>
 				  </div>
 
@@ -177,20 +174,79 @@
 			'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
 		}
 
-	})
+	});
 
 	function productView(id)
 	{
 		// alert(id);
 		$.ajax({
 			type:'GET',
-			url:'product/view/modal'+id,
-			dataType:'json,',
+			url:'/product/view/modal/'+id,
+			dataType:'json',
 			success:function(data)
 			{
+				// console.log('data');
+				$('#pname').text(data.product.product_name_en);
+				$('#price').text(data.product.selling_price);
+				$('#code').text(data.product.product_code);
+				$('#category').text(data.product.category.category_name_en);
+				$('#brand').text(data.product.brand.brand_name_en);
+
+				//product price
+				if(data.product.discount_price == null)
+				{
+					$('#pprice').text('');
+					$('#oldprice').text('');
+					$('#sprice').text(data.product.selling_price);
+				}
+				else
+				{
+					$('#sprice').text(data.product.discount_price);
+					$('#oldprice').text(data.product.selling_price);
+				}
+
+				//stock
+
+				if(data.product.product_qty > 0)
+				{
+					$('#available').text('');
+					$('#stockout').text('');
+					$('#available').text('available')
+				}
+				else
+				{
+					$('#available').text('');
+					$('#stockout').text('');
+					$('#stockout').text('stockout');
+				}
+
+
+
+				//color
+
+				$('select[name="color"]').empty();
+				$.each(data.product_color,function(key,value){
+					$('select[name="color"]').append('<option value= " '+value+' "> '+value+' </option>')
+				})	
+
+
+				$('select[name="size"]').empty();
+				$.each(data.product_size,function(key,value){
+					$('select[name="size"]').append('<option value= " '+value+' "> '+value+' </option>')
 				
+					if(data.product_size == "")
+					{	
+						$('#sizearea').hide();
+					}
+					else
+					{
+						$('#sizearea').show();
+					}
+
+
+				})
 			}
-		})
+		});
 	}
 
 

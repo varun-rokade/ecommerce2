@@ -162,4 +162,4 @@ Route::get('subcategory/product/{subcat_id}/{slug}',[IndexController::class,'Sub
 
 Route::get('subsubcategory/product/{subsubcat_id}/{slug}',[IndexController::class,'SubSubcatWiseProducts']);
 
-Route::get('product/view/modal/{id}',[IndexController::class,'productviewajax']);
+Route::get('/product/view/modal/{id}',[IndexController::class,'productviewajax']);
