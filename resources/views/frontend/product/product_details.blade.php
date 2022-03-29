@@ -523,6 +523,16 @@
 									
 
 <div class="form-group">
+
+	
+	@if ($product->product_size_en == null)
+		
+	@else
+		
+	
+
+
+
 	<label class="info-title control-label">Choose Size <span>*</span></label>
 	<select class="form-control unicase-form-control selectpicker" style="display: none;">
 		<option selected="" disabled="">--Select options--</option>
@@ -531,6 +541,7 @@
 		<option value="{{$size}}">{{ $size }}</option>
 		@endforeach
 	</select>
+	@endif 
 </div>
 
 
@@ -572,8 +583,10 @@
 							            </div>
 									</div>
 
+									<input type="hidden" name="product_id" value="{{ $product->id }}" min="1">
+
 									<div class="col-sm-7">
-										<a href="#" class="btn btn-primary"><i class="fa fa-shopping-cart inner-right-vs"></i> ADD TO CART</a>
+										<button type="submit" onClick = "addToCart()" class="btn btn-primary"> <i class="fa fa-shopping-cart inner-right-vs"></i> ADD TO CART</button>
 									</div>
 
 									
