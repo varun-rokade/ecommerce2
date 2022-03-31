@@ -137,7 +137,7 @@ Route::prefix('product')->group(function(){
 Route::prefix('slider')->group(function(){
 
     Route::get('view/',[SliderController::class,'view'])->name('manage.slider');
-    Route::post('/store',[SliderController::class,'store'])->name('slider.store');
+    Route::post('/store/',[SliderController::class,'store'])->name('slider.store');
     Route::get('/edit/{id}',[SliderController::class,'edit'])->name('edit.slider');
     Route::post('update/{id}',[SliderController::class,'update'])->name('slider.update');
     Route::get('delete/{id}',[SliderController::class,'delete'])->name('delete.slider');

@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Slider;
 use Carbon\Carbon;
+// use Faker\Provider\Image;
+use Intervention\Image\Facades\Image;
+
+
 
 class SliderController extends Controller
 {
@@ -19,22 +23,22 @@ class SliderController extends Controller
     {
         
     
-         $image = $request->file('image');
-         $name_gen = hexdec(uniqid());
-         $img_ext = strtolower($image->getClientMimeType());
-         $img_name = $name_gen . '.' . $img_ext;
-         $up_location = "upload/slider/";
-         $last_img = $up_location.$img_name;
-         $image->move($up_location,$img_name); 
-
-        // $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
-        // Image::make($image)->resize(300,200)->save('upload/brand/'.$name_gen);
-        // $save_url = 'upload/brand/'.$name_gen;
+        //  $name_gen = hexdec(uniqid());
+        //  $img_ext = strtolower($image->getClientMimeType());
+        //  $img_name = $name_gen . '.' . $img_ext;
+        //  $up_location = "upload/slider/";
+        //  $last_img = $up_location.$img_name;
+        //  $image->move($up_location,$img_name); 
+        
+        $image = $request->file('image');
+        $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
+        Image::make($image)->resize(300,300)->save('upload/brand/'.$name_gen);
+        $save_url = 'upload/brand/'.$name_gen;
 
         Slider::insert([
             'title' => $request->slider_title,
             'desc' => $request->slider_desc,
-            'image' => $last_img,
+            'image' => $save_url,
             'created_at' => Carbon::now(), 
             // 'brand_slug_en' => strtolower(str_replace('','-',$request->brand_name_en)),
             // 'brand_slug_hin' => str_replace('','-',$request->brand_name_en),
